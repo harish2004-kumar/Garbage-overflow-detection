@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Garbage Overflow Detection System: A Custom Dataset Analysis</title>
+  <link rel="stylesheet" href="style.css">
+  <style>
+    /* General body styling */
+    body {
+      font-family: 'Courier New', monospace;
+      background-color: rgb(140, 82, 255);
+      background-image: url("{{ url_for('static', filename='123-01.png') }}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Header styling */
+    h1 {
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+      font-size: 36px;
+    }
+
+    /* Style the video container */
+    .video-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin: 20px 0;
+      width: 100%;
+    }
+
+    .video {
+      width: 700px;
+      height: 500px;
+      max-width: 100%;
+      max-height: 100%;
+      border: 3px solid rgb(0, 0, 0);
+      border-radius: 10px;
+    }
+
+    /* Form and button styling */
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      background-color: #79dd2d;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    .button1 {
+      display: inline-block;
+      background-color: #f65c5c;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      margin: 10px;
+      font-size: 16px;
+    }
+
+    .button:hover {
+      background-color: #3e8e41;
+    }
+
+    .button1:hover {
+      background-color: #d63031;
+    }
+
+    /* Selected file name styling */
+    #selected-file-name {
+      margin-top: 10px;
+      font-size: 14px;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <h1><i>Garbage Overflow Detection System</i></h1>
+
+  <!-- Video Container -->
+  <div class="video-container">
+    {% if file_path %}
+    <img src="/video_feed?file={{ file_path }}" class="video">
+    {% else %}
+    <p style="color: white; font-size: 18px;">No video feed available. Please upload a file or use the camera.</p>
+    {% endif %}
+  </div>
+
+  <!-- Buttons and Forms -->
+  <form method="POST" enctype="multipart/form-data">
+    <label for="file-upload" class="button">Select a file</label>
+    <input id="file-upload" type="file" name="file" onchange="document.getElementById('selected-file-name').innerHTML = this.files[0].name;">
+    <div id="selected-file-name"></div>
+    <button type="submit" class="button">Upload</button>
+  </form>
+
+  <form method="POST">
+    <input type="hidden" name="camera" value="true">
+    <button type="submit" class="button">Capture from Camera</button>
+  </form>
+
+  <body>
+    <h1>Detection Results</h1>
+    <p>Biodegradable Count: {{ biodegradable_count }}</p>
+    <p>Non-Biodegradable Count: {{ non_biodegradable_count }}</p>
+    <div>
+        <img src="path/to/image1.png" alt="Biodegradable Image" style="width:300px;height:auto;">
+        <img src="path/to/image2.jpg" alt="Non-Biodegradable Image" style="width:300px;height:auto;">
+    </div>
+  </body>
+
+  <form action="/stop" method="POST">
+    <button type="submit" class="button1">Stop</button>
+  </form>
+</body>
+</html>
